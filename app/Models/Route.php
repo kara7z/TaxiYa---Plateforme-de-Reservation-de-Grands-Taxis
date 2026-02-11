@@ -13,7 +13,7 @@ class Route extends Model
     }
 
     public function arrivalCity() {
-        return $this->belongsTo(City::Class, 'arrival_city_id');
+        return $this->belongsTo(City::class, 'arrival_city_id');
     }
 
     public function trips() {
