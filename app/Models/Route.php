@@ -7,4 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Route extends Model
 {
     protected $fillable = ['start_city_id', 'arrival_city_id', 'base_price'];
+
+    public function startCity() {
+        return $this->belongsTo(City::class, 'start_city_id');
+    }
+
+    public function arrivalCity() {
+        return $this->belongsTo(City::Class, 'arrival_city_id');
+    }
+
+    public function trips() {
+        return $this->hasMany(Trips::class);
+    }
 }
