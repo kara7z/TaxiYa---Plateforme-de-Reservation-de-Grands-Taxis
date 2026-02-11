@@ -16,7 +16,6 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->string('status');
             $table->string('code')->unique();
-            $table->timestamp('created_at')->useCurrent();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('trip_id')->constrained('trips')->onDelete('cascade');
             $table->timestamps();
