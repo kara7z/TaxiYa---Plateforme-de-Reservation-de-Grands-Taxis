@@ -11,21 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-         Schema::create('trips', function (Blueprint $table) {
+        Schema::create('trips', function (Blueprint $table) {
             $table->id();
-
-            $table->time('heure_depart');
-            $table->time('estimat_arrival_time');
-            $table->integer('range_of_late')->nullable();
-
-            $table->decimal('price', 8, 2);
-            $table->enum('status', ['confirmed', 'canceled']);
+            $table->time('departure_hour');
+            $table->time('estimated_arrival_hour');
+            $table->time('range_of_lateness');
+            $table->decimal('price', 10, 2);
+            $table->enum('status', ['confiremed', 'cancelled']);
             $table->date('date');
-
-            $table->foreignId('trajet_id')
-                  ->constrained()
-                  ->cascadeOnDelete();
-
+            $table->foreignId('route_id')->constrained('routes')->onDelete('cascade');
             $table->timestamps();
         });
     }

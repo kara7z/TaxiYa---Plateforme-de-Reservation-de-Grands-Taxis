@@ -13,19 +13,12 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->decimal('price', 8, 2);
+            $table->decimal('price', 10, 2);
             $table->string('status');
             $table->string('code')->unique();
-            $table->timestamp('createdAt')->useCurrent();
-
-            $table->foreignId('user_id')
-                  ->constrained()
-                  ->cascadeOnDelete();
-
-            $table->foreignId('trip_id')
-                  ->constrained()
-                  ->cascadeOnDelete();
-
+            $table->timestamp('created_at')->useCurrent();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('trip_id')->constrained('trips')->onDelete('cascade');
             $table->timestamps();
         });
     }
