@@ -11,24 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('seats', function (Blueprint $table) {
+        Schema::create('reservation_seat', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('seat_number');
-            $table->enum('type', ['front', 'middle', 'back']);
-
-            $table->foreignId('taxi_id')
-                  ->constrained()
-                  ->cascadeOnDelete();
-
+            $table->foreignId('reservation_id')->constrained('reservations')->onDelete('cascade');
+            $table->foreignId('seat_id')->constrained('seats')->onDelete('cascade');
+            $table->unique(['reservation_id', 'seat_id']);
             $table->timestamps();
         });
     }
 
     /**
+     * 
+     */
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('seats');
+        Schema::dropIfExists('reservation_seat');
     }
 };
