@@ -11,16 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('taxis', function (Blueprint $table) {
+        Schema::create('routes', function (Blueprint $table) {
             $table->id();
-            $table->string('model');
-            $table->string('color');
-            $table->string('licence_plate')->unique();
-
-            $table->foreignId('user_id')
-                  ->constrained()
-                  ->cascadeOnDelete();
-
+            $table->foreignId('start_city_id')->constrained('cities')->onDelete('cascade');
+            $table->foreignId('arrival_city_id')->constrained('cities')->onDelete('cascade');
+            $table->decimal('base_price', 10, 2);
             $table->timestamps();
         });
     }
@@ -30,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('taxes');
+        Schema::dropIfExists('routes');
     }
 };
