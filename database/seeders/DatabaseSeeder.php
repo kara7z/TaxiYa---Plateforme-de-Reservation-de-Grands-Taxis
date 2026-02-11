@@ -17,11 +17,15 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'role' => 'admin', 
-            'isValidated' => true, 
+        $this->call([
+            CitySeeder::class,          
+            RouteSeeder::class,          
+            UserSeeder::class,          
+            TaxiSeeder::class,          
+            SeatSeeder::class,           
+            TripSeeder::class,           
+            ReservationSeeder::class, 
+            ReservationSeatSeeder::class,
         ]);
     }
 }
