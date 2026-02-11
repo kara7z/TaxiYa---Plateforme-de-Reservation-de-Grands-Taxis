@@ -17,10 +17,10 @@ return new class extends Migration
             $table->time('estimated_arrival_hour');
             $table->time('range_of_lateness');
             $table->decimal('price', 10, 2);
-            $table->enum('status', ['confiremed', 'cancelled']);
+            $table->enum('status', ['confirmed', 'cancelled']);
             $table->date('date');
             $table->foreignId('route_id')->constrained('routes')->onDelete('cascade');
-            $table->foreignId('taxi_id')->constrained('taxis');
+            // $table->foreignId('taxi_id')->constrained('taxis');
             $table->timestamps();
         });
     }   
