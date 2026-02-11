@@ -1,0 +1,31 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use App\Models\Taxi;
+
+class TaxiSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $taxis = [
+            ['model' => 'Dacia Logan', 'color' => 'Blanc', 'licence_plate' => '1234-A-99'],
+            ['model' => 'Renault Symbol', 'color' => 'Blanc', 'licence_plate' => '5678-B-99'],
+            ['model' => 'Hyundai Accent', 'color' => 'Gris', 'licence_plate' => '9012-C-99'],
+            ['model' => 'Dacia Duster', 'color' => 'Bleu', 'licence_plate' => '3456-D-99'],
+            ['model' => 'Renault Clio', 'color' => 'Rouge', 'licence_plate' => '7890-E-99'],
+            ['model' => 'Toyota Corolla', 'color' => 'Noir', 'licence_plate' => '1357-F-99'],
+            ['model' => 'Dacia Logan', 'color' => 'Argenté', 'licence_plate' => '2468-G-99'],
+            ['model' => 'Renault Kangoo', 'color' => 'Blanc', 'licence_plate' => '8024-H-99'],
+        ];
+
+        foreach ($taxis as $taxi) {
+            Taxi::create($taxi);
+        }
+    }
+}
