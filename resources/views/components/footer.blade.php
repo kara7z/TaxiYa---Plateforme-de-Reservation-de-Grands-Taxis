@@ -33,11 +33,11 @@
     </div>
 
     <div class="text-sm">
-      <div class="font-semibold">Chauffeur & Admin</div>
+      <div class="font-semibold">Chauffeur</div>
       <div class="mt-3 grid gap-2 text-slate-600 dark:text-slate-400">
         <a class="hover:text-slate-900 dark:hover:text-white" href="{{ route('driver.dashboard') }}">Dashboard chauffeur</a>
         <a class="hover:text-slate-900 dark:hover:text-white" href="{{ route('driver.trips.create') }}">Créer un trajet</a>
-        <a class="hover:text-slate-900 dark:hover:text-white" href="{{ route('admin.dashboard') }}">Admin</a>
+        <a class="hover:text-slate-900 dark:hover:text-white" href="{{ route('driver.register') }}">Créer un compte</a>
       </div>
 
       <div class="mt-6 text-xs text-slate-500 dark:text-slate-500">
