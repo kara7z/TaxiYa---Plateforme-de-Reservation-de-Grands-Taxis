@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\Auth\SessionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,13 +45,21 @@ Route::prefix('booking')->name('booking.')->group(function () {
 |--------------------------------------------------------------------------
 */
 
-Route::view('/login', 'auth.login')->name('login');          
-Route::view('/register', 'auth.register')->name('register');
 
-// Placeholders (replace later with real auth)
-Route::post('/login', fn () => redirect()->route('home'))->name('login.submit');
-Route::post('/register', fn () => redirect()->route('home'))->name('register.submit');
-Route::post('/logout', fn () => redirect()->route('home'))->name('logout');
+
+Route::middleware('guest')->group(function () {
+    // Auth pages (guest only)
+    Route::get('/register', [UserController::class, 'create'])->name('register');
+    Route::post('/register', [UserController::class, 'store'])->name('register.store');
+
+    Route::get('/login', [SessionsController::class, 'create'])->name('login');
+    Route::post('/login', [SessionsController::class, 'store'])->name('login.store');
+});
+
+// Logout (auth only)
+Route::delete('/logout', [SessionsController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('logout');
 
 /*
 |--------------------------------------------------------------------------
