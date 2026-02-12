@@ -58,8 +58,30 @@
 
         <label class="block">
           <span class="text-xs font-semibold text-slate-600 dark:text-slate-400">Prix / place (DH)</span>
-          <input type="number" name="price" min="10" step="1" required placeholder="ex: 35"
+          <input type="number" name="price" min="10" step="1" required placeholder="min price : 35"
                  class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm shadow-sm outline-none focus:ring-4 focus:ring-brand-500/20 dark:border-slate-800 dark:bg-slate-900">
+        </label>
+      </div>
+
+      <div class="grid gap-3 sm:grid-cols-2">
+        <label class="block">
+          <span class="text-xs font-semibold text-slate-600 dark:text-slate-400">Heure d'arrivée estimée</span>
+          <input type="time" name="estimated_arrival" required
+                 class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm shadow-sm outline-none focus:ring-4 focus:ring-brand-500/20 dark:border-slate-800 dark:bg-slate-900">
+        </label>
+      </div>
+
+      <div class="grid gap-3 sm:grid-cols-2">
+        <label class="block">
+          <span class="text-xs font-semibold text-slate-600 dark:text-slate-400">Plage de retard (minutes)</span>
+          <input type="number" name="range_of_lateness" min="0" step="1" required placeholder="ex: 15"
+                 class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm shadow-sm outline-none focus:ring-4 focus:ring-brand-500/20 dark:border-slate-800 dark:bg-slate-900">
+        </label>
+
+        <label class="flex items-center gap-2 mt-6">
+          <input type="checkbox" name="repeat_next_7_days"
+                 class="rounded border-slate-200 text-brand-600 shadow-sm focus:ring-4 focus:ring-brand-500/20 dark:border-slate-800 dark:bg-slate-900">
+          <span class="text-sm text-slate-600 dark:text-slate-400">Ajouter ce trajet pour les 7 prochains jours</span>
         </label>
       </div>
 
