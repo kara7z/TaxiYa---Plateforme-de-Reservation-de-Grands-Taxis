@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\TripController;
 use App\Http\Controllers\Auth\SessionsController;
 
 /*
@@ -80,7 +81,8 @@ Route::prefix('driver')->name('driver.')->group(function () {
 
     Route::prefix('trips')->name('trips.')->group(function () {
         Route::view('/', 'driver.trips.index')->name('index');        
-        Route::view('/create', 'driver.trips.create')->name('create'); 
+        Route::get('create', [TripController::class, 'showCities'])->name('create'); 
+        // Route::view('/create', 'driver.trips.create')->name('create'); 
         Route::post('/', fn () => redirect()->route('driver.trips.index'))->name('store'); 
     });
 

@@ -2,9 +2,6 @@
 @section('title', 'Créer un trajet — Chauffeur — TaxiYa')
 
 @section('content')
-@php
-  $cities = $cities ?? ['Rabat','Casablanca','Fès','Marrakech','Agadir','Safi'];
-@endphp
 
 <div class="mx-auto max-w-3xl">
   <x-card>
@@ -26,7 +23,7 @@
                   class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm shadow-sm outline-none focus:ring-4 focus:ring-brand-500/20 dark:border-slate-800 dark:bg-slate-900">
             <option value="" disabled selected>Choisir</option>
             @foreach($cities as $c)
-              <option value="{{ $c }}">{{ $c }}</option>
+              <option value="{{ $c->id }}">{{ $c->name }}</option>
             @endforeach
           </select>
         </label>
@@ -37,7 +34,7 @@
                   class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm shadow-sm outline-none focus:ring-4 focus:ring-brand-500/20 dark:border-slate-800 dark:bg-slate-900">
             <option value="" disabled selected>Choisir</option>
             @foreach($cities as $c)
-              <option value="{{ $c }}">{{ $c }}</option>
+              <option value="{{ $c->id }}">{{ $c->name }}</option>
             @endforeach
           </select>
         </label>
