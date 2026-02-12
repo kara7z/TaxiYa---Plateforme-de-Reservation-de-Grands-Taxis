@@ -62,7 +62,7 @@
   <section class="lg:col-span-7">
     <x-card>
       <div class="flex items-center justify-between">
-        <div class="text-sm font-semibold">Trajets à venir</div>
+        <div class="text-sm font-semibold">Voyages à venir</div>
         <x-badge tone="info">US‑102</x-badge>
       </div>
 
@@ -100,10 +100,10 @@
       </div>
 
       <div class="mt-4 grid gap-3">
-        <a href="/driver/trips/create" class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+        <a href="{{ route('create') }}" class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
           <div class="flex items-center justify-between">
             <div>
-              <div class="font-semibold">Créer un trajet</div>
+              <div class="font-semibold">Créer un voyage</div>
               <div class="text-sm text-slate-600 dark:text-slate-400">Départ • Arrivée • Date • Heure • Prix</div>
             </div>
             <i data-lucide="plus-circle" class="h-5 w-5 text-brand-600"></i>
