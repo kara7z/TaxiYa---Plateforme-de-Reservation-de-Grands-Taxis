@@ -17,6 +17,6 @@ class Route extends Model
     }
 
     public function trips() {
-        return $this->hasMany(Trips::class);
+        return $this->hasMany(Trip::class);
     }
 }
