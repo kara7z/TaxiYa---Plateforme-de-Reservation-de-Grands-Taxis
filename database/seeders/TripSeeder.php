@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Trip;
 use App\Models\Route;
+use App\Models\Taxi;
 
 class TripSeeder extends Seeder
 {
@@ -15,6 +16,7 @@ class TripSeeder extends Seeder
     public function run(): void
     {
         $routes = Route::all();
+        $taxis = Taxi::all();
 
         foreach ($routes as $route) {
             Trip::create([
@@ -25,6 +27,7 @@ class TripSeeder extends Seeder
                 'status' => 'confirmed',
                 'date' => now()->addDays(1),
                 'route_id' => $route->id,
+                'taxi_id' => $taxis->random()->id,
             ]);
 
             Trip::create([
@@ -35,6 +38,7 @@ class TripSeeder extends Seeder
                 'status' => 'confirmed',
                 'date' => now()->addDays(2),
                 'route_id' => $route->id,
+                'taxi_id' => $taxis->random()->id,
             ]);
         }
     }

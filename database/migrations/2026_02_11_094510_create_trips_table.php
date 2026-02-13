@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('status', ['confirmed', 'cancelled']);
             $table->date('date');
             $table->foreignId('route_id')->constrained('routes')->onDelete('cascade');
-            // $table->foreignId('taxi_id')->constrained('taxis');
+            $table->foreignId('taxi_id')->constrained('taxis')->onDelete('cascade');
             $table->timestamps();
         });
     }   
