@@ -19,4 +19,12 @@ class Trip extends Model
     public function taxi() {
         return $this->belongsTo(Taxi::class);
     }
+
+    public function isSeatTaken($seatId)
+    {
+        return $this->reservations()
+            ->whereHas('seats', function($query) use ($seatId) {
+                $query->where('seats.id', $seatId);
+            })->exists();
+    }
 }

@@ -5,10 +5,12 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\TripController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\DriverController;
 use App\Http\Controllers\Auth\SessionsController;
-use App\Http\Controllers\BookingContorller;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TripSearchController;
+use App\Models\City;
+use App\Http\Controllers\Booking\BookingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,26 +20,24 @@ use App\Http\Controllers\AdminController;
 Route::view('/', 'pages.home')->name('home');
 
 Route::prefix('trips')->name('trips.')->group(function () {
-    Route::view('/search', 'pages.search')->name('search');
-    Route::view('/results', 'pages.results')->name('results');
-    Route::view('/{trip}', 'pages.trip.show')->name('show');
+    Route::get('/search', function() {
+        return view('pages.search', ['cities' => City::all()]);
+    })->name('search');
+    Route::get('/results', [TripSearchController::class, 'search'])->name('results');
+    Route::get('/{trip}', [TripSearchController::class, 'show'])->name('show')->middleware('auth');
 });
 
+/*
 /*
 |--------------------------------------------------------------------------
 | Booking (Voyageur)
 |--------------------------------------------------------------------------
 */
-// Route::get('/booking',[BookingContorller::class,'show'])->name('show');
-Route::prefix('booking')->name('booking.')->group(function () {
-    Route::view('/', 'pages.booking.index')->name('index');
+Route::prefix('booking')->name('booking.')->middleware('auth')->group(function () {
+    // Change this from Route::view to Route::get
+    Route::get('/', [BookingController::class, 'index'])->name('index');
 
-    Route::post('/', function (Request $request) {
-        return redirect()->route('booking.success', [
-            'email' => $request->input('email'),
-        ]);
-    })->name('store');
-
+    Route::post('/{trip}', [BookingController::class, 'store'])->name('store');
     Route::view('/success', 'pages.booking.success')->name('success');
 });
 
