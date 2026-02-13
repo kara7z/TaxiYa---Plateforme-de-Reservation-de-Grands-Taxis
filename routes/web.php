@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\DriverController;
 use App\Http\Controllers\Auth\SessionsController;
 use App\Http\Controllers\TripSearchController;
 use App\Models\City;
+use App\Http\Controllers\BookingContorller;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,6 @@ use App\Models\City;
 |--------------------------------------------------------------------------
 */
 Route::view('/', 'pages.home')->name('home');
-Route::view('/welcome', 'welcome')->name('welcome');
 
 Route::prefix('trips')->name('trips.')->group(function () {
     Route::get('/search', function() {
@@ -31,6 +31,7 @@ Route::prefix('trips')->name('trips.')->group(function () {
 | Booking (Voyageur)
 |--------------------------------------------------------------------------
 */
+// Route::get('/booking',[BookingContorller::class,'show'])->name('show');
 Route::prefix('booking')->name('booking.')->group(function () {
     Route::view('/', 'pages.booking.index')->name('index');
 
