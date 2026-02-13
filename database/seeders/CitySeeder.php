@@ -15,8 +15,11 @@ class CitySeeder extends Seeder
     {
         $cities = ['Casablanca', 'Agadir', 'Rabat', 'Marrakech', 'Fès', 'Tanger', 'Oujda', 'Meknès','Tétouan' ,'Safi'];
         
-        foreach ($cities as $cityName) {
-            City::create(['name' => $cityName]);
-        }
+        foreach ($cities as $name) {
+        City::updateOrCreate(
+            ['name' => $name],
+            ['name' => $name]
+        );
+    }
     }
 }

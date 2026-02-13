@@ -19,10 +19,9 @@ use App\Http\Controllers\BookingContorller;
 Route::view('/', 'pages.home')->name('home');
 
 Route::prefix('trips')->name('trips.')->group(function () {
-    Route::get('/search', function() {
-        return view('pages.search', ['cities' => City::all()]);
-    })->name('search');
-    Route::get('/results', [TripSearchController::class, 'search'])->name('results');
+   
+    Route::get('/search', [TripSearchController::class, 'search'])->name('search');
+    Route::get('/results', [TripSearchController::class, 'result'])->name('results');
     Route::get('/{trip}', [TripSearchController::class, 'show'])->name('show');
 });
 
