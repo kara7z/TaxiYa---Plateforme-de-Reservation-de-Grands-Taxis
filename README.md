@@ -40,9 +40,9 @@ Le projet est conçu pour être **mobile-first** avec une UI propre (Blade + Tai
 
 ## Screenshots
 
-![Class Diagram](preview/Class UML.png)
-![Mcd Diagram](preview/Diagramme MCD.png)
-![Use Case Diagram](preview/Use Case.png)
+![Class Diagram](preview/Class%20UML.png)
+![MCD Diagram](preview/Diagramme%20MCD.png)
+![Use Case Diagram](preview/Use%20Case.png)
 
 ---
 ## Key Features
