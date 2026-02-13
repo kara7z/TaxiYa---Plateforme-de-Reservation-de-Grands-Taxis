@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Route;
 use App\Models\City;
 use App\Models\Reservation;
+use App\Models\Trip;
+
 
 
 class AdminController extends Controller
@@ -26,10 +28,9 @@ class AdminController extends Controller
     {
         $drivers = User::where('role', 'driver')
             ->where('isValidated', false)
-            ->with('taxi')
             ->get();
         
-        return view('admin.drivers', ['drivers' => $drivers]);
+        return view('admin.drivers.pending', ['drivers' => $drivers]);
     }
 
     public function validateDriver(User $driver)

@@ -8,6 +8,7 @@ use App\Http\Controllers\TripController;
 use App\Http\Controllers\Auth\DriverController;
 use App\Http\Controllers\Auth\SessionsController;
 use App\Http\Controllers\BookingContorller;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,16 +92,29 @@ Route::prefix('driver')->name('driver.')->middleware(['auth', 'role:driver'])->g
 | Admin Area (PROTECTED)
 |--------------------------------------------------------------------------
 */
+// Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
+
+//     Route::get('/dashboard', 'admin.dashboard')->name('dashboard');
+
+//     Route::prefix('drivers')->name('drivers.')->group(function () {
+//         Route::get('/pending', 'admin.drivers.pending')->name('pending');
+//         Route::get('/{driver}', 'admin.drivers.show')->name('show');
+
+//         Route::post('/{driver}/approve', fn () => redirect()->route('admin.drivers.pending'))->name('approve');
+//         Route::post('/{driver}/reject', fn () => redirect()->route('admin.drivers.pending'))->name('reject');
+//     });
+// });
+
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
 
-    Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
     Route::prefix('drivers')->name('drivers.')->group(function () {
-        Route::view('/pending', 'admin.drivers.pending')->name('pending');
+        Route::get('/pending', [AdminController::class, 'drivers'])->name('pending');
         Route::view('/{driver}', 'admin.drivers.show')->name('show');
 
-        Route::post('/{driver}/approve', fn () => redirect()->route('admin.drivers.pending'))->name('approve');
-        Route::post('/{driver}/reject', fn () => redirect()->route('admin.drivers.pending'))->name('reject');
+        Route::post('/{driver}/approve', [AdminController::class, 'validateDriver'])->name('approve');
+        Route::post('/{driver}/reject', [AdminController::class, 'rejectDriver'])->name('reject');
     });
 });
 
