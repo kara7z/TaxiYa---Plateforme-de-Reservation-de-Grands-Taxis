@@ -38,6 +38,13 @@ Le projet est conçu pour être **mobile-first** avec une UI propre (Blade + Tai
 
 ---
 
+## Screenshots
+
+![Class Diagram](preview/Class UML.png)
+![Mcd Diagram](preview/Diagramme MCD.png)
+![Use Case Diagram](preview/Use Case.png)
+
+---
 ## Key Features
 
 ### Voyageur (Passenger)
@@ -256,20 +263,6 @@ routes/
 database/
   seeders/
   migrations/
-```
-
----
-
-## Screenshots
-
-Put screenshots inside `Preview/` (optional)
-
-Example:
-
-```md
-![Home](preview/home.png)
-![Search](preview/search.png)
-![Driver Dashboard](preview/driver-dashboard.png)
 ```
 
 ---
