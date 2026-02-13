@@ -36,5 +36,6 @@ class UserSeeder extends Seeder
             'role' => 'passenger',
             'isValidated' => true,
         ]);
+        
     }
 }
