@@ -44,9 +44,6 @@
         <a href="/register" class="font-semibold text-brand-600 hover:text-brand-500">Créer un compte</a>
       </p>
 
-      <div class="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-xs text-slate-600 dark:border-slate-800 dark:bg-slate-950/30 dark:text-slate-400">
-        Pour la démo : tu peux brancher ça à Laravel Breeze / Fortify / Jetstream.
-      </div>
     </form>
   </x-card>
 </div>

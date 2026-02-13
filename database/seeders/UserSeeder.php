@@ -30,6 +30,7 @@ class UserSeeder extends Seeder
             ]
         );
 
+<<<<<<< HEAD
         User::updateOrCreate(
             ['email' => 'passenger@taxiapp.com'],
             [
@@ -39,5 +40,15 @@ class UserSeeder extends Seeder
                 'isValidated' => true,
             ]
         );
+=======
+        $passenger = User::create([
+            'name' => 'Passager Marie',
+            'email' => 'passenger@taxiapp.com',
+            'password' => 'passenger123',
+            'role' => 'passenger',
+            'isValidated' => true,
+        ]);
+        
+>>>>>>> main
     }
 }

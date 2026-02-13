@@ -3,7 +3,7 @@
 
 @section('content')
 @php
-  $driver = $driver ?? ['name'=>'Amina', 'status'=>'pending']; // pending|approved
+  $driver = $driver ?? ['name'=>'Amina', 'status'=>'pending'];
   $stats = $stats ?? ['trips_today'=>2,'seats_reserved'=>7,'revenue_est'=>420];
   $upcoming = $upcoming ?? [
     ['id'=>11,'from'=>'Rabat','to'=>'Casablanca','date'=>date('Y-m-d'),'time'=>'10:00','reserved'=>4],
