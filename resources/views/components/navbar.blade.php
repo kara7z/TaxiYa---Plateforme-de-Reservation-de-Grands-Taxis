@@ -7,7 +7,7 @@
 <header class="sticky top-0 z-50 border-b border-white/40 bg-white/70 backdrop-blur dark:border-slate-800/60 dark:bg-slate-950/60">
   <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
 
-    {{-- Logo (TEXT ONLY) --}}
+    {{-- Logo --}}
     <a href="{{ route('home') }}" class="group flex items-center gap-2">
       <div class="leading-tight">
         <div class="text-lg font-extrabold tracking-tight">
@@ -28,54 +28,71 @@
         Rechercher
       </a>
 
-      <a href="{{ route('driver.dashboard') }}"
-         class="{{ $linkBase }} {{ request()->routeIs('driver.*') ? $linkActive : '' }}">
-        Chauffeur
-      </a>
+      @auth
+        @if(auth()->user()->role === 'passenger')
+          <a href="{{ route('booking.index') }}"
+             class="{{ $linkBase }} {{ request()->routeIs('booking.*') ? $linkActive : '' }}">
+            Mes réservations
+          </a>
+        @endif
 
-      <a href="{{ route('admin.dashboard') }}"
-         class="{{ $linkBase }} {{ request()->routeIs('admin.*') ? $linkActive : '' }}">
-        Admin
-      </a>
+        @if(auth()->user()->role === 'driver')
+          <a href="{{ route('driver.dashboard') }}"
+             class="{{ $linkBase }} {{ request()->routeIs('driver.*') ? $linkActive : '' }}">
+            Dashboard
+          </a>
+        @endif
+
+        @if(auth()->user()->role === 'admin')
+          <a href="{{ route('admin.dashboard') }}"
+             class="{{ $linkBase }} {{ request()->routeIs('admin.*') ? $linkActive : '' }}">
+            Dashboard
+          </a>
+        @endif
+      @endauth
     </nav>
 
-    {{-- Right actions --}}
     <div class="flex items-center gap-2">
 
-      {{-- Theme toggle (no extra libs needed) --}}
+      {{-- Theme toggle --}}
       <button type="button" id="themeToggle"
               class="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white shadow-sm
                      hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800"
               aria-label="Toggle theme">
         <span id="themeIcon" class="text-sm">🌙</span>
       </button>
-      @guest
-      <div class="hidden items-center gap-2 sm:flex">
-        <a href="{{ route('login') }}"
-           class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold shadow-sm
-                  hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800">
-          Se connecter
-        </a>
-        <a href="{{ route('register') }}"
-           class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm
-                  hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100">
-          Créer un compte
-        </a>
-      </div>
-      @endguest
-      @auth
-      <form method="POST" action="{{ route('logout') }}" class="inline">
-          @csrf
-          @method('DELETE')
 
-          <button type="submit"
-            class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold shadow-sm
-                   hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800">
-            Se déconnecter
-          </button>
-        </form>
-      @endauth
-      {{-- Mobile menu (pure HTML - no Alpine) --}}
+      {{-- Desktop Auth--}}
+      <div class="hidden items-center gap-2 sm:flex">
+        @guest
+          <a href="{{ route('login') }}"
+             class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold shadow-sm
+                    hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800">
+            Se connecter
+          </a>
+
+          <a href="{{ route('register') }}"
+             class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm
+                    hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100">
+            Créer un compte
+          </a>
+        @endguest
+
+        @auth
+          <form method="POST" action="{{ route('logout') }}" class="inline">
+            @csrf
+            @method('DELETE')
+
+            <button type="submit"
+              class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold shadow-sm
+                     hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800">
+              Se déconnecter
+            </button>
+          </form>
+        @endauth
+      </div>
+
+      {{-- Mobile menu --}}
       <details class="relative md:hidden">
         <summary
           class="list-none grid h-10 w-10 cursor-pointer place-items-center rounded-xl border border-slate-200 bg-white shadow-sm
@@ -87,26 +104,65 @@
         <div
           class="absolute right-0 mt-3 w-64 overflow-hidden rounded-2xl border border-white/40 bg-white/95 p-2 shadow-lg backdrop-blur
                  dark:border-slate-800/60 dark:bg-slate-950/90">
-          <a class="block rounded-xl px-3 py-2 font-semibold hover:bg-slate-100 dark:hover:bg-slate-900"
-             href="{{ route('trips.search') }}">Rechercher</a>
-        
-          <a class="block rounded-xl px-3 py-2 font-semibold hover:bg-slate-100 dark:hover:bg-slate-900"
-             href="{{ route('driver.dashboard') }}">Espace chauffeur</a>
 
+          
           <a class="block rounded-xl px-3 py-2 font-semibold hover:bg-slate-100 dark:hover:bg-slate-900"
-             href="{{ route('admin.dashboard') }}">Admin</a>
+             href="{{ route('trips.search') }}">
+            Rechercher
+          </a>
 
-          <div class="my-2 h-px bg-slate-200 dark:bg-slate-800"></div>
-        
-      
-        
-          <a class="block rounded-xl px-3 py-2 font-semibold hover:bg-slate-100 dark:hover:bg-slate-900"
-             href="{{ route('login') }}">Se connecter</a>
+          @auth
+            {{-- Passenger --}}
+            @if(auth()->user()->role === 'passenger')
+              <a class="block rounded-xl px-3 py-2 font-semibold hover:bg-slate-100 dark:hover:bg-slate-900"
+                 href="{{ route('booking.index') }}">
+                Mes réservations
+              </a>
+            @endif
 
-          <a class="block rounded-xl bg-slate-900 px-3 py-2 font-semibold text-white hover:bg-slate-800
-                    dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
-             href="{{ route('register') }}">Créer un compte</a>
-      
+            {{-- Driver --}}
+            @if(auth()->user()->role === 'driver')
+              <a class="block rounded-xl px-3 py-2 font-semibold hover:bg-slate-100 dark:hover:bg-slate-900"
+                 href="{{ route('driver.dashboard') }}">
+                Dashboard
+              </a>
+            @endif
+
+            {{-- Admin --}}
+            @if(auth()->user()->role === 'admin')
+              <a class="block rounded-xl px-3 py-2 font-semibold hover:bg-slate-100 dark:hover:bg-slate-900"
+                 href="{{ route('admin.dashboard') }}">
+                Dashboard
+              </a>
+            @endif
+
+            <div class="my-2 h-px bg-slate-200 dark:bg-slate-800"></div>
+
+            {{-- Logout --}}
+            <form method="POST" action="{{ route('logout') }}" class="block">
+              @csrf
+              @method('DELETE')
+              <button type="submit"
+                class="w-full text-left rounded-xl px-3 py-2 font-semibold hover:bg-slate-100 dark:hover:bg-slate-900">
+                Se déconnecter
+              </button>
+            </form>
+          @else
+            <div class="my-2 h-px bg-slate-200 dark:bg-slate-800"></div>
+
+            {{-- Guest --}}
+            <a class="block rounded-xl px-3 py-2 font-semibold hover:bg-slate-100 dark:hover:bg-slate-900"
+               href="{{ route('login') }}">
+              Se connecter
+            </a>
+
+            <a class="block rounded-xl bg-slate-900 px-3 py-2 font-semibold text-white hover:bg-slate-800
+                      dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
+               href="{{ route('register') }}">
+              Créer un compte
+            </a>
+          @endauth
+
         </div>
       </details>
 
