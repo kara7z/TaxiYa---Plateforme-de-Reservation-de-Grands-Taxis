@@ -13,13 +13,13 @@
       <x-badge tone="info">Chauffeur</x-badge>
     </div>
 
-    <form class="mt-6 grid gap-4" method="POST" action="#">
+    <form class="mt-6 grid gap-4" method="POST" action="{{ route('driver.trips.store') }}">
       @csrf
 
       <div class="grid gap-3 sm:grid-cols-2">
         <label class="block">
           <span class="text-xs font-semibold text-slate-600 dark:text-slate-400">Départ</span>
-          <select name="from" required
+          <select name="from" id="fromCity" required 
                   class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm shadow-sm outline-none focus:ring-4 focus:ring-brand-500/20 dark:border-slate-800 dark:bg-slate-900">
             <option value="" disabled selected>Choisir</option>
             @foreach($cities as $c)
@@ -30,7 +30,7 @@
 
         <label class="block">
           <span class="text-xs font-semibold text-slate-600 dark:text-slate-400">Arrivée</span>
-          <select name="to" required
+          <select name="to" id="toCity" required
                   class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm shadow-sm outline-none focus:ring-4 focus:ring-brand-500/20 dark:border-slate-800 dark:bg-slate-900">
             <option value="" disabled selected>Choisir</option>
             @foreach($cities as $c)
@@ -39,6 +39,25 @@
           </select>
         </label>
       </div>
+
+      <script>
+        const fromCity = document.getElementById("fromCity");
+        const toCity = document.getElementById("toCity");
+
+        fromCity.addEventListener("change", function () {
+          const fromValue = this.value;
+
+          [...toCity.options].forEach(option => {
+            option.hidden = option.value === fromValue;
+          });
+
+          // Reset arrival if it was the same as departure
+          if (toCity.value === fromValue) {
+            toCity.value = "";
+          }
+        });
+      </script>
+
 
       <div class="grid gap-3 sm:grid-cols-3">
         <label class="block">

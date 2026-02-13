@@ -13,6 +13,9 @@ class TripController extends Controller
         $cities = City::All();
         return view('driver.trips.create',['cities' => $cities]);
     }
+    function create(){
+        
+    }
 }
 
 
