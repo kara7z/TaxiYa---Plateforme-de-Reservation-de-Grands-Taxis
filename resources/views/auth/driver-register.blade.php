@@ -12,7 +12,7 @@
       <x-badge tone="warning">Validation admin</x-badge>
     </div>
 
-    <form class="mt-6 grid gap-3" method="POST" action="#">
+    <form class="mt-6 grid gap-3" method="POST" action="{{ route('driver.register.store') }}">
       @csrf
 
       <label class="block">

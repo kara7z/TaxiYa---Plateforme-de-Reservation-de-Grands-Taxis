@@ -17,11 +17,11 @@
   </div>
 
   <div class="flex gap-2">
-    <x-button as="a" href="/driver/trips/create">
+    <x-button as="a" type="button" href="/driver/trips/create">
       <i data-lucide="plus" class="h-4 w-4"></i>
       Nouveau trajet
     </x-button>
-    <x-button as="a" href="/driver/dashboard" variant="secondary">
+    <x-button as="a" type="button" href="/driver/dashboard" variant="secondary">
       <i data-lucide="layout-dashboard" class="h-4 w-4"></i>
       Dashboard
     </x-button>
@@ -47,15 +47,15 @@
         <x-badge tone="info">En attente de réservations</x-badge>
 
         <div class="flex flex-wrap gap-2">
-          <x-button as="a" href="/driver/bookings" variant="secondary" size="sm">
+          <x-button type="button" as="a" href="/driver/bookings" variant="secondary" size="sm">
             <i data-lucide="users" class="h-4 w-4"></i>
             Réservations
           </x-button>
-          <x-button variant="ghost" size="sm">
+          <x-button type="button" variant="ghost" size="sm">
             <i data-lucide="pencil" class="h-4 w-4"></i>
             Modifier
           </x-button>
-          <x-button variant="danger" size="sm">
+          <x-button type="button" variant="danger" size="sm">
             <i data-lucide="trash-2" class="h-4 w-4"></i>
             Supprimer
           </x-button>
