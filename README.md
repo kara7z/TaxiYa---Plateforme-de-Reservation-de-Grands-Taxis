@@ -9,6 +9,7 @@ Le projet est construit avec **Laravel** (PHP) et une architecture claire orient
 ## Table of Contents
 
 * [Project Overview](#project-overview)
+* [Screenshots](#screenshots)
 * [Key Features](#key-features)
 * [Roles & Access](#roles--access)
 * [Routes Overview](#routes-overview)
@@ -18,7 +19,6 @@ Le projet est construit avec **Laravel** (PHP) et une architecture claire orient
 * [Seeding](#seeding)
 * [Running the App](#running-the-app)
 * [Project Structure](#project-structure)
-* [Screenshots](#screenshots)
 * [Roadmap](#roadmap)
 * [License](#license)
 
@@ -40,9 +40,10 @@ Le projet est conçu pour être **mobile-first** avec une UI propre (Blade + Tai
 
 ## Screenshots
 
-![Class Diagram](preview/Class%20UML.png)
+![Use Case Diagram](preview/Use%20Case%20Diagram.png)
 ![MCD Diagram](preview/Diagramme%20MCD.png)
-![Use Case Diagram](preview/Use%20Case.png)
+![Class UML](preview/Classe%20UML.png)
+![Home Page](preview/HomePage.png)
 
 ---
 ## Key Features
