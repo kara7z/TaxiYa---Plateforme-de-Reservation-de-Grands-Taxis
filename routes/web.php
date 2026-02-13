@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\Auth\DriverController;
 use App\Http\Controllers\Auth\SessionsController;
+use App\Http\Controllers\TripSearchController;
+use App\Models\City;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +19,11 @@ Route::view('/', 'pages.home')->name('home');
 Route::view('/welcome', 'welcome')->name('welcome');
 
 Route::prefix('trips')->name('trips.')->group(function () {
-    Route::view('/search', 'pages.search')->name('search');
-    Route::view('/results', 'pages.results')->name('results');
-    Route::view('/{trip}', 'pages.trip.show')->name('show');
+    Route::get('/search', function() {
+        return view('pages.search', ['cities' => City::all()]);
+    })->name('search');
+    Route::get('/results', [TripSearchController::class, 'search'])->name('results');
+    Route::get('/{trip}', [TripSearchController::class, 'show'])->name('show');
 });
 
 /*
