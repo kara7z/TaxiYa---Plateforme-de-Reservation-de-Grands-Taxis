@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\TripController;
+use App\Http\Controllers\RouteController;
 use App\Http\Controllers\Auth\DriverController;
 use App\Http\Controllers\Auth\SessionsController;
 
@@ -75,6 +76,7 @@ Route::prefix('driver')->name('driver.')->middleware(['auth', 'role:driver'])->g
     Route::prefix('trips')->name('trips.')->group(function () {
         Route::view('/', 'driver.trips.index')->name('index');        
         Route::get('create', [TripController::class, 'showCities'])->name('create'); 
+        Route::get('create', [RouteController::class, 'getBasePrice'])->name('route_base_price'); 
         // Route::view('/create', 'driver.trips.create')->name('create'); 
         Route::post('/', fn () => redirect()->route('driver.trips.index'))->name('store'); 
         Route::view('/', 'driver.trips.index')->name('index');
