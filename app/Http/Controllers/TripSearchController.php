@@ -52,6 +52,13 @@ class TripSearchController extends Controller
     public function show(Trip $trip)
     {
         $trip->load(['taxi.seats', 'route.startCity', 'route.arrivalCity']);
-        return view('pages.trip.show', compact('trip'));
+
+        $bookedSeatIds = \DB::table('reservation_seat')
+            ->join('reservations', 'reservation_seat.reservation_id', '=', 'reservations.id')
+            ->where('reservations.trip_id', $trip->id)
+            ->pluck('seat_id')
+            ->toArray();
+
+        return view('pages.trip.show', compact('trip', 'bookedSeatIds'));
     }
 }
