@@ -32,7 +32,7 @@ class DriverController extends Controller
     Auth::login($user);
     $request->session()->regenerate();
 
-    return redirect()->route('/');
+    return redirect()->route('driver.dashboard');
 
     }
 }
