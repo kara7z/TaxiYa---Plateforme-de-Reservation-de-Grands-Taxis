@@ -12,7 +12,7 @@
       <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Voyageur</p>
     </div>
 
-    <form class="mt-6 grid gap-3" method="POST" action="#">
+    <form class="mt-6 grid gap-3" method="POST" action="{{ route('register.store') }}">
       @csrf
 
       <label class="block">

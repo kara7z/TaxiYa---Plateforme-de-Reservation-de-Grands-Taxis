@@ -13,7 +13,7 @@
       <x-badge tone="info">Chauffeur</x-badge>
     </div>
 
-    <form class="mt-6 grid gap-4" method="POST" action="#">
+    <form class="mt-6 grid gap-4" method="POST" action="{{ route('driver.trips.store') }}">
       @csrf
 
       <div class="grid gap-3 sm:grid-cols-2">

@@ -18,11 +18,11 @@
   </div>
 
   <div class="flex flex-wrap gap-2">
-    <x-button as="a" href="/driver/trips/create">
+    <x-button type="button" as="a" href="/driver/trips/create">
       <i data-lucide="plus" class="h-4 w-4"></i>
       Créer un trajet
     </x-button>
-    <x-button as="a" href="/driver/trips" variant="secondary">
+    <x-button type="button" as="a" href="/driver/trips" variant="secondary">
       <i data-lucide="list" class="h-4 w-4"></i>
       Mes trajets
     </x-button>
@@ -77,11 +77,11 @@
               <x-badge tone="{{ $t['reserved'] >= 5 ? 'warning' : 'success' }}">{{ $t['reserved'] }}/6 réservées</x-badge>
             </div>
             <div class="mt-3 flex gap-2">
-              <x-button as="a" href="/driver/bookings" variant="secondary" size="sm">
+              <x-button type="button" as="a" href="/driver/bookings" variant="secondary" size="sm">
                 <i data-lucide="users" class="h-4 w-4"></i>
                 Voir réservations
               </x-button>
-              <x-button as="a" href="/driver/trips" variant="ghost" size="sm">
+              <x-button type="button" as="a" href="/driver/trips" variant="ghost" size="sm">
                 <i data-lucide="pencil" class="h-4 w-4"></i>
                 Gérer
               </x-button>
@@ -100,7 +100,7 @@
       </div>
 
       <div class="mt-4 grid gap-3">
-        <a href="{{ route('create') }}" class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+        <a href="{{ route('driver.trips.create') }}" class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
           <div class="flex items-center justify-between">
             <div>
               <div class="font-semibold">Créer un voyage</div>
