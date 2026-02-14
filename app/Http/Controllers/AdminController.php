@@ -8,13 +8,14 @@ use App\Models\Route;
 use App\Models\City;
 use App\Models\Reservation;
 use App\Models\Trip;
-
+        use Illuminate\Support\Carbon;
 
 
 class AdminController extends Controller
 {
     public function index()
     {
+
         $stats = [
             'drivers_pending' => User::where('role', 'driver')
                 ->where('isValidated', false) ->count(),
@@ -41,31 +42,70 @@ class AdminController extends Controller
     }
     public function rejectDriver(User $driver)
     {
-        $driver->delete(); // ou $driver->update(['isValidated' => false]);
+        $driver->delete();
         return redirect()->route('admin.drivers.pending')
             ->with('success', 'Chauffeur rejeté !');
     }
+    public function showDriver(User $driver)
+    {
+        return view('admin.drivers.show', ['driver' => $driver]);
+    }
 
-    // public function routes()
-    // {
-    //     $cities = City::all();
-    //     $routes = Route::with('startCity', 'arrivalCity')->get();
-    //     return view('admin.routes', [
-    //         'cities' => $cities,
-    //         'routes' => $routes,
-    //     ]);
-    // }
+    public function listDrivers()
+    {
+        $drivers = User::where('role', 'driver')->get();
+        return view('admin.drivers.list', ['drivers' => $drivers]);
+    }
 
-    // public function storeRoute(Request $request)
-    // {
-    //     Route::create([
-    //         'start_city_id' => $request->start_city_id,
-    //         'arrival_city_id' => $request->arrival_city_id,
-    //         'base_price' => $request->base_price,
-    //     ]);
+    public function deleteDriver(User $driver)
+    {
+        $driver->delete();
         
-    //     return redirect()->back()->with('success', 'Route créée avec succès !');
-    // }
+        return redirect()->route('admin.drivers.list')
+            ->with('success', 'Chauffeur supprimé avec succès !');
+    }
+
+    public function listRoutes()
+    {
+        $routes = Route::with('startCity', 'arrivalCity')->get();
+        return view('admin.routes.list', ['routes' => $routes]);
+    }
+
+    public function deleteRoute(Route $route)
+    {
+        $route->delete();
+        return redirect()->route('admin.routes.list')
+            ->with('success', 'Route supprimée avec succès !');
+    }
+
+    public function createRoute()
+    {
+        $cities = City::all();
+        return view('admin.routes.create', ['cities' => $cities]);
+    }
+
+    public function storeRoute(Request $request)
+    {
+        $request->validate([
+            'start_city_id' => 'required|exists:cities,id',
+            'arrival_city_id' => 'required|exists:cities,id|different:start_city_id',
+            'base_price' => 'required|numeric',
+        ]);
+        
+        $exists = Route::where('start_city_id', $request->start_city_id)
+        ->where('arrival_city_id', $request->arrival_city_id)
+        ->exists();
+
+        if ($exists) {
+            return back()->with('error', 'Cette route existe déjà !');
+        }
+        Route::create([
+            'start_city_id' => $request->start_city_id,
+            'arrival_city_id' => $request->arrival_city_id,
+            'base_price' => $request->base_price,
+        ]);
+        return redirect()->route('admin.dashboard')->with('success', 'Route créée avec succès !');
+    }
 }
 
 

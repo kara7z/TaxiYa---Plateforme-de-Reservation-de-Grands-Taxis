@@ -99,11 +99,19 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
 
     Route::prefix('drivers')->name('drivers.')->group(function () {
         Route::get('/pending', [AdminController::class, 'drivers'])->name('pending');
-        Route::view('/{driver}', 'admin.drivers.show')->name('show');
+        Route::get('/{driver}', [AdminController::class, 'showDriver'])->name('show');
 
         Route::post('/{driver}/approve', [AdminController::class, 'validateDriver'])->name('approve');
         Route::post('/{driver}/reject', [AdminController::class, 'rejectDriver'])->name('reject');
     });
+    
+    Route::get('/drivers', [AdminController::class, 'listDrivers'])->name('drivers.list');
+    Route::delete('/drivers/{driver}', [AdminController::class, 'deleteDriver'])->name('drivers.delete');
+    
+    Route::get('/routes', [AdminController::class, 'listRoutes'])->name('routes.list');
+    Route::delete('/routes/{route}', [AdminController::class, 'deleteRoute'])->name('routes.delete');
+    Route::get('/routes/create', [AdminController::class, 'createRoute'])->name('routes.create');
+    Route::post('/routes', [AdminController::class, 'storeRoute'])->name('routes.store');
 });
 
 Route::fallback(fn () => response()->view('errors.404', [], 404));

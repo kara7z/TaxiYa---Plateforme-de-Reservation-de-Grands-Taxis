@@ -34,15 +34,15 @@
 </div>
 
 <div class="mt-6 grid gap-6 lg:grid-cols-12">
-  <section class="lg:col-span-7">
+  <section class="lg:col-span-12">
     <x-card>
       <div class="flex items-center justify-between">
         <div class="text-sm font-semibold">Raccourcis</div>
         <i data-lucide="settings" class="h-4 w-4 text-brand-600"></i>
       </div>
 
-      <div class="mt-4 grid gap-3 sm:grid-cols-2">
-        <a href="/admin/drivers/pending" class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+      <div class="mt-4 grid gap-3 sm:grid-cols-3">
+        <!-- <a href="/admin/drivers/pending" class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
           <div class="flex items-center justify-between">
             <div>
               <div class="font-semibold">Validation chauffeurs</div>
@@ -50,13 +50,32 @@
             </div>
             <i data-lucide="badge-check" class="h-5 w-5 text-brand-600"></i>
           </div>
-        </a>
+        </a> -->
 
-        <a href="#" class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+        <a href="{{ route('admin.drivers.list') }}" class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
           <div class="flex items-center justify-between">
             <div>
-              <div class="font-semibold">Gestion villes</div>
-              <div class="text-sm text-slate-600 dark:text-slate-400">Liste des stops</div>
+              <div class="font-semibold">Gestion des chauffeurs</div>
+              <div class="text-sm text-slate-600 dark:text-slate-400">Voir tous les chauffeurs</div>
+            </div>
+            <i data-lucide="users" class="h-5 w-5 text-brand-600"></i>
+          </div>
+        </a>
+        
+        <a href="{{ route('admin.routes.list') }}" class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="font-semibold">Gestion des routes</div>
+              <div class="text-sm text-slate-600 dark:text-slate-400">Voir toutes les routes</div>
+            </div>
+            <i data-lucide="map" class="h-5 w-5 text-brand-600"></i>
+          </div>
+        </a>
+
+        <a href="{{ route('admin.routes.create') }}" class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="font-semibold">Creation des routes</div>
             </div>
             <i data-lucide="map" class="h-5 w-5 text-brand-600"></i>
           </div>
@@ -64,20 +83,5 @@
       </div>
     </x-card>
   </section>
-
-  <aside class="lg:col-span-5">
-    <x-card>
-      <div class="text-sm font-semibold">Note MVP</div>
-      <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
-        Pour la démo, l’admin valide juste un champ `is_approved` sur le chauffeur.
-      </p>
-      <div class="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm dark:border-slate-800 dark:bg-slate-950/30">
-        <div class="font-semibold">Suggestion</div>
-        <p class="mt-1 text-slate-600 dark:text-slate-400">
-          Affiche un badge “En attente” dans l’espace chauffeur jusqu’à validation.
-        </p>
-      </div>
-    </x-card>
-  </aside>
 </div>
 @endsection
