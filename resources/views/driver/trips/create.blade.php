@@ -45,18 +45,24 @@
         const toCity = document.getElementById("toCity");
 
         fromCity.addEventListener("change", function () {
-          const fromValue = this.value;
+          console.log('from city : ', fromCity.value);
+
+          const fromValue = fromCity.value;
 
           [...toCity.options].forEach(option => {
             option.hidden = option.value === fromValue;
           });
 
-          // Reset arrival if it was the same as departure
           if (toCity.value === fromValue) {
             toCity.value = "";
           }
         });
+
+        toCity.addEventListener("change", function () {
+          console.log('to city : ', toCity.value);
+        });
       </script>
+
 
 
       <div class="grid gap-3 sm:grid-cols-3">
@@ -74,7 +80,7 @@
 
         <label class="block">
           <span class="text-xs font-semibold text-slate-600 dark:text-slate-400">Prix / place (DH)</span>
-          <input type="number" name="price" min="10" step="1" required placeholder="min price : 35"
+          <input type="number" id='price' name="price" min="10" step="1" required placeholder="min price : 35"
                  class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm shadow-sm outline-none focus:ring-4 focus:ring-brand-500/20 dark:border-slate-800 dark:bg-slate-900">
         </label>
       </div>
@@ -121,3 +127,35 @@
   </x-card>
 </div>
 @endsection
+
+<script>
+  const fromCity = document.getElementById("fromCity");
+  const toCity = document.getElementById("toCity");
+  const basePriceInput = document.getElementById("base_price");
+
+  function fetchBasePrice() {
+    const from = fromCity.value;
+    const to = toCity.value;
+
+    // Only fetch if both are selected
+    if (!from || !to) {
+      basePriceInput.value = "";
+      return;
+    }
+
+    fetch(`/basePrice?from=${from}&to=${to}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log('base price response:', data);
+
+        if (data.base_price !== null) {
+          basePriceInput.value = data.base_price;
+        } else {
+          basePriceInput.value = "";
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching base price:', error);
+      });
+  }
+</script>
