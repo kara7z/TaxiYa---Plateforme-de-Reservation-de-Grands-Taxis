@@ -9,8 +9,8 @@ final class RouteController extends Controller
 {
     public function getBasePrice(Request $request)
     {
-        $startCityId = $request->query('start_city_id');
-        $arrivalCityId = $request->query('arrival_city_id');
+        $startCityId = $request->query('from') ?? $request->query('start_city_id');
+        $arrivalCityId = $request->query('to') ?? $request->query('arrival_city_id');
 
         $route = Route::where('start_city_id', $startCityId)
             ->where('arrival_city_id', $arrivalCityId)
