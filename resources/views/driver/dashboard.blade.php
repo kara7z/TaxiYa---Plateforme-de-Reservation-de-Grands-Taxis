@@ -43,7 +43,11 @@
   </div>
 @endif
 
-<div class="grid gap-4 sm:grid-cols-3">
+<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+    <div class="text-xs text-slate-500 dark:text-slate-400">Trajets créés</div>
+    <div class="mt-2 text-3xl font-extrabold">{{ $stats['trips_created'] ?? 0 }}</div>
+  </div>
   <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
     <div class="text-xs text-slate-500 dark:text-slate-400">Trajets aujourd’hui</div>
     <div class="mt-2 text-3xl font-extrabold">{{ $stats['trips_today'] }}</div>

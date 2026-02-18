@@ -32,24 +32,31 @@
           <div class="flex items-start justify-between gap-3">
             <div>
               <div class="font-semibold">{{ $b['trip'] }}</div>
-              <div class="mt-1 text-sm text-slate-600 dark:text-slate-400">{{ $b['time'] }} • Place #{{ $b['seat'] }}</div>
+              <div class="mt-1 text-sm text-slate-600 dark:text-slate-400">{{ $b['time'] }} • Place(s): {{ $b['seat'] }}</div>
               <div class="mt-3 text-sm">
                 <div class="font-semibold">{{ $b['name'] }}</div>
                 <div class="text-xs text-slate-500 dark:text-slate-400">{{ $b['email'] }}</div>
               </div>
             </div>
-            <x-badge tone="success">Confirmée</x-badge>
+            <x-badge tone="{{ $b['status'] === 'validated' ? 'success' : 'info' }}">
+                {{ $b['status'] === 'validated' ? 'A bord' : 'Confirmée' }}
+            </x-badge>
           </div>
 
-          <div class="mt-4 flex flex-wrap gap-2">
-            <x-button variant="secondary" size="sm">
-              <i data-lucide="qr-code" class="h-4 w-4"></i>
-              QR (demo)
-            </x-button>
-            <x-button size="sm">
-              <i data-lucide="check" class="h-4 w-4"></i>
-              Valider embarquement
-            </x-button>
+          <div class="mt-4 flex flex-wrap gap-2 items-center">
+            <div class="rounded-lg bg-slate-100 px-3 py-1.5 font-mono text-sm font-bold tracking-widest text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                #{{ $b['code'] }}
+            </div>
+
+            @if($b['status'] !== 'validated')
+            <form action="{{ route('driver.bookings.validate', $b['id']) }}" method="POST">
+                @csrf
+                <x-button type="submit" size="sm">
+                  <i data-lucide="check" class="h-4 w-4"></i>
+                  Valider embarquement
+                </x-button>
+            </form>
+            @endif
           </div>
         </div>
       @endforeach

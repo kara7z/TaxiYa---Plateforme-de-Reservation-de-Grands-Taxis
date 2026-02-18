@@ -16,10 +16,20 @@
     <form class="mt-6 grid gap-4" method="POST" action="{{ route('driver.trips.store') }}">
       @csrf
 
+      @if ($errors->any())
+        <div class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-900/20 dark:text-red-400">
+          <ul class="list-inside list-disc">
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
+
       <div class="grid gap-3 sm:grid-cols-2">
         <label class="block">
           <span class="text-xs font-semibold text-slate-600 dark:text-slate-400">Départ</span>
-          <select name="from" required
+          <select name="from" id="fromCity" required 
                   class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm shadow-sm outline-none focus:ring-4 focus:ring-brand-500/20 dark:border-slate-800 dark:bg-slate-900">
             <option value="" disabled selected>Choisir</option>
             @foreach($cities as $c)
@@ -30,7 +40,7 @@
 
         <label class="block">
           <span class="text-xs font-semibold text-slate-600 dark:text-slate-400">Arrivée</span>
-          <select name="to" required
+          <select name="to" id="toCity" required
                   class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm shadow-sm outline-none focus:ring-4 focus:ring-brand-500/20 dark:border-slate-800 dark:bg-slate-900">
             <option value="" disabled selected>Choisir</option>
             @foreach($cities as $c)
@@ -39,6 +49,8 @@
           </select>
         </label>
       </div>
+
+
 
       <div class="grid gap-3 sm:grid-cols-3">
         <label class="block">
@@ -55,7 +67,7 @@
 
         <label class="block">
           <span class="text-xs font-semibold text-slate-600 dark:text-slate-400">Prix / place (DH)</span>
-          <input type="number" name="price" min="10" step="1" required placeholder="min price : 35"
+          <input type="number" id='base_price' name="price" min="10" step="1" required placeholder="min price :___"
                  class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm shadow-sm outline-none focus:ring-4 focus:ring-brand-500/20 dark:border-slate-800 dark:bg-slate-900">
         </label>
       </div>
@@ -102,3 +114,134 @@
   </x-card>
 </div>
 @endsection
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const fromCity = document.getElementById("fromCity");
+    const toCity = document.getElementById("toCity");
+    const basePriceInput = document.getElementById("base_price");
+
+    // ✅ Laravel-generated URL
+    const basePriceUrl = "{{ route('driver.trips.route_base_price') }}";
+
+    function fetchBasePrice() {
+        const from = fromCity.value;
+        const to = toCity.value;
+
+        if (!from || !to) {
+            basePriceInput.value = "";
+            basePriceInput.min = 10;
+            basePriceInput.placeholder = "Prix de base : ___ DH";
+            return;
+        }
+
+        fetch(`${basePriceUrl}?from=${from}&to=${to}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('HTTP error ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('base price response:', data);
+
+                if (data.base_price !== null) {
+                    const price = parseInt(data.base_price);
+
+                    basePriceInput.min = price;
+                    basePriceInput.value = price;
+                    basePriceInput.placeholder = `Prix de base : ${price} DH`;
+                } else {
+                    basePriceInput.value = "";
+                    basePriceInput.min = 10;
+                    basePriceInput.placeholder = "Aucun prix de base pour ce trajet";
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching base price:', error);
+            });
+    }
+
+    fromCity.addEventListener("change", function () {
+        const fromValue = fromCity.value;
+
+        [...toCity.options].forEach(option => {
+            option.hidden = option.value === fromValue;
+        });
+
+        if (toCity.value === fromValue) {
+            toCity.value = "";
+        }
+
+        fetchBasePrice();
+    });
+
+    toCity.addEventListener("change", fetchBasePrice);
+});
+</script>
+
+
+<!-- <script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    const fromCity = document.getElementById("fromCity");
+    const toCity = document.getElementById("toCity");
+    const basePriceInput = document.getElementById("base_price");
+
+    function fetchBasePrice() {
+      const from = fromCity.value;
+      const to = toCity.value;
+
+      if (!from || !to) {
+        basePriceInput.value = "";
+        basePriceInput.min = 10;
+        basePriceInput.placeholder = "Prix de base :___ DH";
+        return;
+      }
+
+      fetch(`/basePrice?from=${from}&to=${to}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log('base price response:', data);
+
+          if (data.base_price !== null) {
+            const price = parseInt(data.base_price);
+
+            basePriceInput.min = price;
+            basePriceInput.value = price;
+            basePriceInput.placeholder = `Prix de base : ${price} DH`;
+
+          } else {
+            basePriceInput.value = "";
+            basePriceInput.min = 10;
+            basePriceInput.placeholder = "Prix de base : ___ DH";
+          }
+        })
+    .catch(error => {
+      console.error('Error fetching base price:', error);
+    });
+    }
+
+    fromCity.addEventListener("change", function () {
+      console.log('from city:', fromCity.value);
+
+      const fromValue = fromCity.value;
+
+      [...toCity.options].forEach(option => {
+        option.hidden = option.value === fromValue;
+      });
+
+      if (toCity.value === fromValue) {
+        toCity.value = "";
+      }
+
+      fetchBasePrice();
+    });
+
+    toCity.addEventListener("change", function () {
+      console.log('to city:', toCity.value);
+      fetchBasePrice();
+    });
+
+  });
+</script> -->

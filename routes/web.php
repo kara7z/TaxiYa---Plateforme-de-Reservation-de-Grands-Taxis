@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\TripController;
+use App\Http\Controllers\RouteController;
 use App\Http\Controllers\Auth\DriverController;
 use App\Http\Controllers\Auth\SessionsController;
 use App\Http\Controllers\TripSearchController;
@@ -65,17 +67,20 @@ Route::delete('/logout', [SessionsController::class, 'destroy'])
 */
 Route::prefix('driver')->name('driver.')->middleware(['auth', 'role:driver'])->group(function () {
 
-    Route::view('/dashboard', 'driver.dashboard')->name('dashboard');
-
+    Route::get('/dashboard', [TripController::class, 'dashboard'])->name('dashboard');
+    
     Route::prefix('trips')->name('trips.')->group(function () {
-        Route::view('/', 'driver.trips.index')->name('index');        
+        Route::get('/', [TripController::class, 'index'])->name('index');        
         Route::get('create', [TripController::class, 'showCities'])->name('create'); 
-        Route::post('/', fn () => redirect()->route('driver.trips.index'))->name('store'); 
+        Route::get('basePrice', [RouteController::class, 'getBasePrice'])->name('route_base_price'); 
+        Route::post('/', [TripController::class, 'store'])->name('store');
+        
+        Route::delete('/{trip}', [TripController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('bookings')->name('bookings.')->group(function () {
-        Route::view('/', 'driver.bookings.index')->name('index');
-        Route::post('/{booking}/validate', fn () => back())->name('validate');
+        Route::get('/', [TripController::class, 'bookings'])->name('index');
+        Route::post('/{booking}/validate', [TripController::class, 'validateBooking'])->name('validate');
     });
 });
 
