@@ -22,7 +22,12 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'taxi_id',
     ];
+
+    public function taxi() {
+        return $this->belongsTo(Taxi::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

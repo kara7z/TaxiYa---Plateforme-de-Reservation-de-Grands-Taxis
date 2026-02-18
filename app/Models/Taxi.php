@@ -15,4 +15,8 @@ class Taxi extends Model
     public function trips() {
         return $this->hasMany(Trip::class);
     }
+
+    public function driver() {
+        return $this->hasOne(User::class);
+    }
 }

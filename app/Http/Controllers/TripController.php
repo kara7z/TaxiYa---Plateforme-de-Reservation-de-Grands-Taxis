@@ -29,9 +29,7 @@ class TripController extends Controller
         
         // If there was a relationship: return Auth::user()->taxi->id ?? 0;
         
-        // Fallback: Return 1 (mocking that the logged-in driver owns Taxi #1)
-        // Ideally, we would ask the user to select a taxi or add a taxi_id to users.
-        return 1; 
+        return Auth::user()->taxi_id; 
     }
 
     public function dashboard()
