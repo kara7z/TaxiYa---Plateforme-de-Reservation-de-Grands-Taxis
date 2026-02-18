@@ -44,14 +44,21 @@
             <i data-lucide="eye" class="h-4 w-4"></i>
             Voir
           </x-button>
-          <x-button size="sm">
-            <i data-lucide="check" class="h-4 w-4"></i>
-            Approuver
-          </x-button>
-          <x-button variant="danger" size="sm">
-            <i data-lucide="x" class="h-4 w-4"></i>
-            Refuser
-          </x-button>
+          <form method="POST" action="{{ route('admin.drivers.approve', $d['id']) }}" style="display:inline;">
+            @csrf
+            <x-button type="submit" size="sm">
+              <i data-lucide="check" class="h-4 w-4"></i>
+              Approuver
+            </x-button>
+          </form>
+          <form method="POST" action="{{ route('admin.drivers.reject', $d['id']) }}" style="display:inline;" 
+                onsubmit="return confirm('Confirmer le rejet de ce chauffeur ?');">
+            @csrf
+            <x-button type="submit" variant="danger" size="sm">
+              <i data-lucide="x" class="h-4 w-4"></i>
+              Refuser
+            </x-button>
+          </form>
         </div>
       </div>
     </div>

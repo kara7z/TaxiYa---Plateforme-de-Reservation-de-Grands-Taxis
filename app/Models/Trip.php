@@ -23,4 +23,12 @@ class Trip extends Model
     public function getTaxiAttribute() {
         return $this->driver->taxi;
     }
+
+    public function isSeatTaken($seatId)
+    {
+        return $this->reservations()
+            ->whereHas('seats', function($query) use ($seatId) {
+                $query->where('seats.id', $seatId);
+            })->exists();
+    }
 }
