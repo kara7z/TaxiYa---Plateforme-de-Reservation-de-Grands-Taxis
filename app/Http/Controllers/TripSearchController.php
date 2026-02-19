@@ -32,7 +32,10 @@ class TripSearchController extends Controller
             $takenSeatsCount = DB::table('reservation_seat')
                 ->join('reservations', 'reservation_seat.reservation_id', '=', 'reservations.id')
                 ->where('reservations.trip_id', $trip->id)
+                ->where('reservations.status', '!=', 'cancelled') // Proactive: exclude cancelled
                 ->count();
+
+            $totalSeats = $trip->taxi ? $trip->taxi->seats->count() : 6;
 
             return [
                 'id'        => $trip->id,
@@ -42,7 +45,7 @@ class TripSearchController extends Controller
                 'time'      => Carbon::parse($trip->departure_hour)->format('H:i'),
                 'price'     => (int) $trip->price,
                 'available' => 6 - $takenSeatsCount, 
-                'driver'    => $trip->taxi->model . " (" . $trip->taxi->licence_plate . ")",
+                'driver'    => $trip->taxi ? ($trip->taxi->model . " (" . $trip->taxi->licence_plate . ")") : "No Taxi Assigned",
                 'status'    => 'open',
             ];
         });

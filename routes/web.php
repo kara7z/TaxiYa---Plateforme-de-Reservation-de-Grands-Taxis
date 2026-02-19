@@ -19,7 +19,6 @@ Route::view('/', 'pages.home')->name('home');
 
 Route::prefix('trips')->name('trips.')->group(function () {
 
-   
     Route::get('/search', [TripSearchController::class, 'search'])->name('search');
     Route::get('/results', [TripSearchController::class, 'result'])->name('results');
     Route::get('/{trip}', [TripSearchController::class, 'show'])->name('show');
@@ -40,7 +39,7 @@ Route::prefix('booking')->name('booking.')->middleware('auth')->group(function (
 
 /*
 |--------------------------------------------------------------------------
-| Auth 
+| Auth
 |--------------------------------------------------------------------------
 */
 Route::middleware('guest')->group(function () {
@@ -67,13 +66,13 @@ Route::delete('/logout', [SessionsController::class, 'destroy'])
 Route::prefix('driver')->name('driver.')->middleware(['auth', 'role:driver'])->group(function () {
 
     Route::get('/dashboard', [TripController::class, 'dashboard'])->name('dashboard');
-    
+
     Route::prefix('trips')->name('trips.')->group(function () {
         Route::get('/', [TripController::class, 'index'])->name('index');        
         Route::get('create', [TripController::class, 'showCities'])->name('create'); 
         Route::get('basePrice', [RouteController::class, 'getBasePrice'])->name('route_base_price'); 
         Route::post('/', [TripController::class, 'store'])->name('store');
-        
+
         Route::delete('/{trip}', [TripController::class, 'destroy'])->name('destroy');
     });
 
@@ -100,10 +99,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
         Route::post('/{driver}/approve', [AdminController::class, 'validateDriver'])->name('approve');
         Route::post('/{driver}/reject', [AdminController::class, 'rejectDriver'])->name('reject');
     });
-    
+
     Route::get('/drivers', [AdminController::class, 'listDrivers'])->name('drivers.list');
     Route::delete('/drivers/{driver}', [AdminController::class, 'deleteDriver'])->name('drivers.delete');
-    
+
     Route::get('/routes', [AdminController::class, 'listRoutes'])->name('routes.list');
     Route::delete('/routes/{route}', [AdminController::class, 'deleteRoute'])->name('routes.delete');
     Route::get('/routes/create', [AdminController::class, 'createRoute'])->name('routes.create');

@@ -29,7 +29,7 @@
   </div>
 </div>
 
-@if($driver['status']==='pending')
+@if(!$driver->isValidated)
   <div class="mb-6 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-amber-900 shadow-sm dark:border-amber-900/40 dark:bg-amber-900/20 dark:text-amber-100">
     <div class="flex items-start gap-3">
       <i data-lucide="hourglass" class="mt-1 h-5 w-5"></i>

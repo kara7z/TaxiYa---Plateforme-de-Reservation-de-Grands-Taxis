@@ -2,13 +2,20 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Taxi;
+use App\Models\User;
+use Illuminate\Database\Seeder;
 
 class TaxiSeeder extends Seeder
 {
     public function run(): void
     {
+        $driverIds = User::pluck('id');
+
+        if ($driverIds->isEmpty()) {
+            return;
+        }
+
         $taxis = [
             ['model' => 'Dacia Logan', 'color' => 'Blanc', 'licence_plate' => '1234-A-99'],
             ['model' => 'Renault Symbol', 'color' => 'Blanc', 'licence_plate' => '5678-B-99'],
@@ -27,6 +34,7 @@ class TaxiSeeder extends Seeder
                     'model' => $taxi['model'],
                     'color' => $taxi['color'],
                     'licence_plate' => $taxi['licence_plate'],
+                    'driver_id' => $driverIds->random(),
                 ]
             );
         }

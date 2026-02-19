@@ -64,7 +64,7 @@
                 <x-card>
                     <div class="text-sm font-semibold mb-4 border-b pb-2">Récapitulatif</div>
                     <div class="space-y-3 text-sm">
-                        <div class="flex justify-between"><span class="text-slate-500">Taxi</span><span class="font-medium">{{ $trip->taxi->model }}</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">Taxi</span><span class="font-medium text-right">{{ $trip->taxi->model }}</span></div>
                         <div class="flex justify-between"><span class="text-slate-500">Prix unitaire</span><span class="font-medium text-brand-600">{{ number_format($trip->price, 0) }} DH</span></div>
                         <div class="pt-2 flex justify-between border-t font-bold text-lg">
                             <span>Total</span>
