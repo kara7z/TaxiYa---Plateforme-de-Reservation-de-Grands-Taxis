@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'role',
         'taxi_id',
+        'isValidated',
     ];
 
     public function taxi() {

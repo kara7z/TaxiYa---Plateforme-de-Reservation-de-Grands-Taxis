@@ -2,38 +2,50 @@
 @section('title', 'Réservation confirmée — TaxiYa')
 
 @section('content')
-@php
-  $email = request('email','voyageur@example.com');
-@endphp
-
-<div class="mx-auto max-w-2xl">
+<div class="mx-auto max-w-2xl py-8">
   <x-card class="text-center">
-    <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-emerald-600 text-white shadow-sm">
-      <i data-lucide="check-circle" class="h-7 w-7"></i>
+    <div class="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-emerald-600 text-white shadow-lg animate-bounce-short">
+      <i data-lucide="party-popper" class="h-8 w-8"></i>
     </div>
 
-    <h1 class="mt-4 text-2xl font-extrabold tracking-tight">Réservation confirmée</h1>
-    <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">
-      Un email de confirmation a été envoyé à <span class="font-semibold">{{ $email }}</span>.
-    </p>
+    <h1 class="mt-6 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">Félicitations !</h1>
+    
+    <div class="mt-2 text-slate-600 dark:text-slate-400">
+        @if(session('success'))
+            <p class="text-lg font-medium text-emerald-600">{{ session('success') }}</p>
+        @endif
+        <p class="mt-1 text-sm">
+            Un récapitulatif a été envoyé à <span class="font-bold text-slate-900 dark:text-white">{{ auth()->user()->email }}</span>.
+        </p>
+    </div>
 
-    <div class="mt-6 grid gap-3 sm:grid-cols-2">
-      <x-button as="a" href="/bookings" variant="secondary">
-        <i data-lucide="list" class="h-4 w-4"></i>
-        Voir mes réservations
+    <div class="mt-8 grid gap-3 sm:grid-cols-2">
+      <x-button as="a" href="{{ route('booking.index') }}" variant="secondary" class="h-12">
+        <i data-lucide="ticket" class="h-5 w-5"></i>
+        Mes réservations
       </x-button>
-      <x-button as="a" href="/search">
-        <i data-lucide="search" class="h-4 w-4"></i>
-        Réserver un autre trajet
+      <x-button as="a" href="{{ route('trips.search') }}" class="h-12 bg-brand-600 hover:bg-brand-700">
+        <i data-lucide="search" class="h-5 w-5"></i>
+        Trouver un autre trajet
       </x-button>
     </div>
 
-    <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-4 text-left text-sm shadow-sm dark:border-slate-800 dark:bg-slate-900">
-      <div class="font-semibold">Pour la démo</div>
-      <ul class="mt-2 grid gap-2 text-slate-600 dark:text-slate-400">
-        <li class="flex gap-2"><i data-lucide="dot" class="mt-1 h-4 w-4"></i> Afficher un QR code (bonus US‑502)</li>
-        <li class="flex gap-2"><i data-lucide="dot" class="mt-1 h-4 w-4"></i> Statut “à venir / terminé / annulé” (US‑501)</li>
-      </ul>
+    <div class="mt-10 rounded-2xl border border-dashed border-slate-300 bg-slate-50/50 p-6 text-left dark:border-slate-700 dark:bg-slate-900/50">
+      <div class="flex items-center gap-2 font-bold text-slate-800 dark:text-slate-200">
+          <i data-lucide="layers" class="h-4 w-4"></i>
+          <span>Statut du MVP (Prototype)</span>
+      </div>
+      
+      <div class="mt-4 grid gap-4 sm:grid-cols-2">
+          <div class="space-y-1">
+              <div class="text-xs font-bold uppercase text-slate-400 tracking-wider">Étape Suivante</div>
+              <p class="text-sm text-slate-600 dark:text-slate-400 font-medium">Le chauffeur doit maintenant valider votre demande (Interface Chauffeur).</p>
+          </div>
+          <div class="space-y-1">
+              <div class="text-xs font-bold uppercase text-slate-400 tracking-wider">Bonus Demo</div>
+              <p class="text-sm text-slate-600 dark:text-slate-400 font-medium">Génération d'un QR Code unique pour l'embarquement.</p>
+          </div>
+      </div>
     </div>
   </x-card>
 </div>

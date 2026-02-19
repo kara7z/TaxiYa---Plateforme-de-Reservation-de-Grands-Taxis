@@ -16,14 +16,14 @@
       <x-badge tone="info">Voyageur</x-badge>
     </div>
 
-    <form class="mt-6 grid gap-4" action="/results" method="GET">
+    <form class="mt-6 grid gap-4" action="{{ route('trips.results') }}" method="GET">
       <div class="grid gap-3 sm:grid-cols-2">
         <label class="block">
           <span class="text-xs font-semibold text-slate-600 dark:text-slate-400">Départ</span>
           <select name="from" class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm shadow-sm outline-none focus:ring-4 focus:ring-brand-500/20 dark:border-slate-800 dark:bg-slate-900">
             <option value="" disabled selected>Choisir</option>
             @foreach($cities as $c)
-              <option value="{{ $c }}">{{ $c }}</option>
+              <option value="{{ $c->name }}">{{ $c->name }}</option>
             @endforeach
           </select>
         </label>
@@ -33,7 +33,7 @@
           <select name="to" class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm shadow-sm outline-none focus:ring-4 focus:ring-brand-500/20 dark:border-slate-800 dark:bg-slate-900">
             <option value="" disabled selected>Choisir</option>
             @foreach($cities as $c)
-              <option value="{{ $c }}">{{ $c }}</option>
+              <option value="{{ $c->name }}">{{ $c->name }}</option>
             @endforeach
           </select>
         </label>

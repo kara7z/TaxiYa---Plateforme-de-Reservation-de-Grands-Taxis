@@ -19,13 +19,14 @@ class TripSeeder extends Seeder
         $taxis = Taxi::all();
 
         foreach ($routes as $route) {
+            
             Trip::create([
                 'departure_hour' => '08:30:00',
                 'estimated_arrival_hour' => '11:00:00',
                 'range_of_lateness' => '00:20:00',
                 'price' => $route->base_price * 1.1,
                 'status' => 'confirmed',
-                'date' => now()->addDays(1),
+                'date' => now()->addDays(1)->toDateString(),
                 'route_id' => $route->id,
                 'taxi_id' => $taxis->random()->id,
             ]);
@@ -36,7 +37,7 @@ class TripSeeder extends Seeder
                 'range_of_lateness' => '00:15:00',
                 'price' => $route->base_price * 1.05,
                 'status' => 'confirmed',
-                'date' => now()->addDays(2),
+                'date' => now()->addDays(2)->toDateString(),
                 'route_id' => $route->id,
                 'taxi_id' => $taxis->random()->id,
             ]);

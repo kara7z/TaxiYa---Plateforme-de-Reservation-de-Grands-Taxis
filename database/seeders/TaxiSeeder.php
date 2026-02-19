@@ -2,15 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Taxi;
 
 class TaxiSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $taxis = [
@@ -25,7 +21,14 @@ class TaxiSeeder extends Seeder
         ];
 
         foreach ($taxis as $taxi) {
-            Taxi::create($taxi);
+            Taxi::updateOrCreate(
+                ['licence_plate' => $taxi['licence_plate']],
+                [
+                    'model' => $taxi['model'],
+                    'color' => $taxi['color'],
+                    'licence_plate' => $taxi['licence_plate'],
+                ]
+            );
         }
     }
 }

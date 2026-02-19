@@ -7,7 +7,7 @@
     <div class="flex items-start justify-between gap-3">
       <div>
         <h1 class="text-2xl font-extrabold tracking-tight">Inscription chauffeur</h1>
-        <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Nom • Email • Téléphone (US‑101)</p>
+        
       </div>
       <x-badge tone="warning">Validation admin</x-badge>
     </div>
