@@ -10,32 +10,38 @@ use Illuminate\Support\Facades\DB;
 
 class TripSearchController extends Controller
 {
+    public function search()
+    {
+        return view('pages.search', ['cities' => City::all()]);
+    }
+
     public function result(Request $request)
     {
-
         $from = $request->query('from');
         $to   = $request->query('to');
         $date = $request->query('date');
 
-
-        $tripModels = Trip::with(['route.startCity', 'route.arrivalCity', 'taxi.seats'])
+        $tripModels = Trip::with([
+            'route.startCity',
+            'route.arrivalCity',
+            'taxi.seats',
+        ])
             ->whereDate('date', $date)
             ->whereHas('route', function ($query) use ($from, $to) {
                 $query->whereHas('startCity', fn($q) => $q->where('name', $from))
-                      ->whereHas('arrivalCity', fn($q) => $q->where('name', $to));
+                    ->whereHas('arrivalCity', fn($q) => $q->where('name', $to));
             })
             ->where('status', 'confirmed')
             ->get();
 
         $trips = $tripModels->map(function ($trip) {
-
             $takenSeatsCount = DB::table('reservation_seat')
                 ->join('reservations', 'reservation_seat.reservation_id', '=', 'reservations.id')
                 ->where('reservations.trip_id', $trip->id)
-                ->where('reservations.status', '!=', 'cancelled') // Proactive: exclude cancelled
+                ->where('reservations.status', '!=', 'cancelled')
                 ->count();
 
-            $totalSeats = $trip->taxi ? $trip->taxi->seats->count() : 6;
+            $totalSeats = $trip->taxi?->seats?->count() ?? 6;
 
             return [
                 'id'        => $trip->id,
@@ -44,23 +50,26 @@ class TripSearchController extends Controller
                 'date'      => $trip->date,
                 'time'      => Carbon::parse($trip->departure_hour)->format('H:i'),
                 'price'     => (int) $trip->price,
-                'available' => 6 - $takenSeatsCount, 
-                'driver'    => $trip->taxi ? ($trip->taxi->model . " (" . $trip->taxi->licence_plate . ")") : "No Taxi Assigned",
+                'available' => max(0, $totalSeats - $takenSeatsCount),
+                'driver'    => $trip->taxi
+                    ? ($trip->taxi->model . ' (' . $trip->taxi->licence_plate . ')')
+                    : 'No Taxi Assigned',
                 'status'    => 'open',
             ];
         });
 
         return view('pages.results', compact('trips'));
     }
-    function search(){
-        return view('pages.search', ['cities' => City::all()]);
-    }
 
     public function show(Trip $trip)
     {
-        $trip->load(['taxi.seats', 'route.startCity', 'route.arrivalCity']);
+        $trip->load([
+            'route.startCity',
+            'route.arrivalCity',
+            'taxi.seats',
+        ]);
 
-        $bookedSeatIds = \DB::table('reservation_seat')
+        $bookedSeatIds = DB::table('reservation_seat')
             ->join('reservations', 'reservation_seat.reservation_id', '=', 'reservations.id')
             ->where('reservations.trip_id', $trip->id)
             ->pluck('seat_id')

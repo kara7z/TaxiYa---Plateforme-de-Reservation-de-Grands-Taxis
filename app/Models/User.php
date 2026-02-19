@@ -26,9 +26,11 @@ class User extends Authenticatable
         'isValidated',
     ];
 
-    public function taxi() {
-        return $this->belongsTo(Taxi::class);
+    public function taxi()
+    {
+        return $this->belongsTo(\App\Models\Taxi::class);
     }
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -53,11 +55,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function reservations() {
+    public function reservations()
+    {
         return $this->hasMany(Reservation::class);
     }
 
-    public function trips() {
+    public function trips()
+    {
         return $this->hasMany(Trip::class, 'driver_id');
     }
 }
