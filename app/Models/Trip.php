@@ -43,10 +43,10 @@ class Trip extends Model
         return $this->hasOneThrough(
             Taxi::class,
             User::class,
-            'id',
-            'driver_id',
-            'driver_id',
-            'id'
+            'id',        // Foreign key on users table (matches trips.driver_id)
+            'id',        // Foreign key on taxis table (matches users.taxi_id)
+            'driver_id', // Local key on trips table
+            'taxi_id'    // Local key on users table
         );
     }
 

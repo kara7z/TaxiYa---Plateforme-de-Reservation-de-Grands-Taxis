@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Booking\BookingController;
+use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\TripController;
+use App\Http\Controllers\RouteController;
 use App\Http\Controllers\Auth\DriverController;
 use App\Http\Controllers\Auth\SessionsController;
-use App\Http\Controllers\Auth\UserController;
-use App\Http\Controllers\Booking\BookingController;
-use App\Http\Controllers\RouteController;
-use App\Http\Controllers\TripController;
 use App\Http\Controllers\TripSearchController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,9 +68,9 @@ Route::prefix('driver')->name('driver.')->middleware(['auth', 'role:driver'])->g
     Route::get('/dashboard', [TripController::class, 'dashboard'])->name('dashboard');
 
     Route::prefix('trips')->name('trips.')->group(function () {
-        Route::get('/', [TripController::class, 'index'])->name('index');
-        Route::get('create', [TripController::class, 'showCities'])->name('create');
-        Route::get('basePrice', [RouteController::class, 'getBasePrice'])->name('route_base_price');
+        Route::get('/', [TripController::class, 'index'])->name('index');        
+        Route::get('create', [TripController::class, 'showCities'])->name('create'); 
+        Route::get('basePrice', [RouteController::class, 'getBasePrice'])->name('route_base_price'); 
         Route::post('/', [TripController::class, 'store'])->name('store');
 
         Route::delete('/{trip}', [TripController::class, 'destroy'])->name('destroy');
