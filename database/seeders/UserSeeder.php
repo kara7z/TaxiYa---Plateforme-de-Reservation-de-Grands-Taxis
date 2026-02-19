@@ -39,5 +39,25 @@ class UserSeeder extends Seeder
                 'isValidated' => true,
             ]
         );
+
+        User::updateOrCreate(
+            ['email' => 'rihabsabri21@gmail.com'],
+            [
+                'name' => 'Rihab',
+                'password' => Hash::make('rihabsabri21@gmail.com'),
+                'role' => 'passenger',
+                'isValidated' => true,
+            ]
+        );
+
+        User::updateOrCreate(
+            ['email' => 'rihab@gmail.com'],
+            [
+                'name' => 'Rihab',
+                'password' => Hash::make('rihab@gmail.com'),
+                'role' => 'passenger',
+                'isValidated' => true,
+            ]
+        );
     }
 }
