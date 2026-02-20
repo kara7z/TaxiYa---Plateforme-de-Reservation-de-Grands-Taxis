@@ -29,6 +29,18 @@
 <form action="{{ route('booking.store', $trip->id) }}" method="POST">
     @csrf
 
+    @if ($errors->any())
+        <div class="mb-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-900/20 dark:text-red-400">
+            {{ $errors->first() }}
+        </div>
+    @endif
+
+    @if(auth()->user() && auth()->user()->role === 'driver')
+        <div class="mb-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-700 dark:border-amber-900/50 dark:bg-amber-900/20 dark:text-amber-400">
+            En tant que chauffeur, vous ne pouvez pas effectuer de réservations.
+        </div>
+    @endif
+
     <div class="grid gap-6 lg:grid-cols-12" x-data="{ selectedSeats: [] }">
 
         <section class="lg:col-span-7">

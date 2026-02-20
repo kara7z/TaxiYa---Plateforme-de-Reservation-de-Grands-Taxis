@@ -56,6 +56,7 @@ class TripController extends Controller
                 $reservedCount = \DB::table('reservation_seat')
                     ->join('reservations', 'reservation_seat.reservation_id', '=', 'reservations.id')
                     ->where('reservations.trip_id', $trip->id)
+                    ->where('reservations.status', '!=', 'cancelled')
                     ->count();
 
                 return [
@@ -104,6 +105,32 @@ class TripController extends Controller
         }
 
         $driver = Auth::user();
+
+        // 0. Check for overlaps
+        $datesToCheck = [$request->date];
+        if ($request->has('repeat_next_7_days')) {
+            $startDate = Carbon::parse($request->date);
+            for ($i = 1; $i <= 7; $i++) {
+                $datesToCheck[] = $startDate->copy()->addDays($i)->format('Y-m-d');
+            }
+        }
+
+        $newStart = $request->time;
+        $newEnd = $request->estimated_arrival;
+
+        foreach ($datesToCheck as $date) {
+            $overlap = Trip::where('driver_id', $driver->id)
+                ->where('date', $date)
+                ->where(function ($query) use ($newStart, $newEnd) {
+                    $query->where('departure_hour', '<', $newEnd)
+                          ->where('estimated_arrival_hour', '>', $newStart);
+                })
+                ->exists();
+
+            if ($overlap) {
+                return back()->withInput()->withErrors(['time' => "Vous avez déjà un trajet prévu le $date qui chevauche cet horaire ($newStart → $newEnd)."]);
+            }
+        }
         
         $createTrip = function($date) use ($request, $route, $driver) {
              Trip::create([

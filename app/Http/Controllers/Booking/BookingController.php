@@ -16,7 +16,7 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings = Reservation::with(['trip.route.startCity', 'trip.route.arrivalCity', 'seats'])
+        $bookings = Reservation::with(['trip.route.startCity', 'trip.route.arrivalCity', 'trip.taxi', 'trip.driver', 'seats'])
             ->where('user_id', auth()->id())
             ->latest()
             ->get();
@@ -34,6 +34,10 @@ class BookingController extends Controller
             'seats.*' => 'exists:seats,id',
             'email' => 'required|email'
         ]);
+        
+        if (auth()->user()->role === 'driver') {
+            return back()->withErrors(['seats' => 'En tant que chauffeur, vous ne pouvez pas effectuer de réservations.']);
+        }
 
         $isAlreadyTaken = DB::table('reservation_seat')
             ->join('reservations', 'reservation_seat.reservation_id', '=', 'reservations.id')
